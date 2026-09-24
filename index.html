@@ -1,0 +1,3214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <title>Skyrox — 3D Artist & Modeler</title>
+
+    <meta
+        name="description"
+        content="Portfolio of Skyrox, also known as skygamm4 — 3D modeling, game assets, props, characters and environments."
+    >
+
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap");
+
+        :root {
+            --bg: #08090b;
+            --bg-soft: #0d0f12;
+            --panel: rgba(17, 19, 23, 0.72);
+            --panel-solid: #111317;
+            --border: rgba(255, 255, 255, 0.09);
+            --border-strong: rgba(255, 255, 255, 0.15);
+
+            --text: #f2f3f5;
+            --muted: #969ba5;
+            --muted-strong: #c3c6cd;
+
+            --accent: #ffffff;
+            --accent-soft: rgba(255, 255, 255, 0.08);
+
+            --radius: 22px;
+            --max-width: 1320px;
+
+            --nav-height: 78px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            background:
+                radial-gradient(
+                    circle at 15% 10%,
+                    rgba(255, 255, 255, 0.055),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 90% 25%,
+                    rgba(255, 255, 255, 0.035),
+                    transparent 28%
+                ),
+                var(--bg);
+
+            color: var(--text);
+            font-family: "Inter", sans-serif;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+
+            pointer-events: none;
+            z-index: 100;
+
+            background:
+                linear-gradient(
+                    rgba(255, 255, 255, 0.012) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255, 255, 255, 0.012) 1px,
+                    transparent 1px
+                );
+
+            background-size: 48px 48px;
+
+            mask-image: linear-gradient(
+                to bottom,
+                black,
+                rgba(0, 0, 0, 0.35)
+            );
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button,
+        a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        ::selection {
+            background: rgba(255, 255, 255, 0.18);
+            color: #fff;
+        }
+
+        .page {
+            position: relative;
+            z-index: 1;
+        }
+
+        .container {
+            width: min(
+                calc(100% - 40px),
+                var(--max-width)
+            );
+
+            margin: 0 auto;
+        }
+
+        /* ---------------------------------
+           NAVIGATION
+        --------------------------------- */
+
+        .nav-wrap {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+
+            z-index: 50;
+
+            padding: 15px 20px;
+        }
+
+        .nav {
+            width: min(1200px, 100%);
+            height: 58px;
+
+            margin: 0 auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 10px 0 18px;
+
+            border: 1px solid var(--border);
+            border-radius: 18px;
+
+            background: rgba(9, 10, 12, 0.72);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+
+            box-shadow:
+                0 14px 45px rgba(0, 0, 0, 0.28),
+                inset 0 1px rgba(255, 255, 255, 0.025);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+        }
+
+        .brand-mark {
+            width: 32px;
+            height: 32px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 9px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffffff,
+                    #8d9199
+                );
+
+            color: #08090b;
+
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+
+            box-shadow:
+                0 5px 18px rgba(255, 255, 255, 0.1);
+        }
+
+        .brand-name {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .brand-name span {
+            color: var(--muted);
+            font-weight: 500;
+            margin-left: 4px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .nav-links a {
+            position: relative;
+
+            padding: 9px 13px;
+
+            border-radius: 10px;
+
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 600;
+
+            transition:
+                color 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-hire {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+
+            padding: 9px 13px;
+
+            border: 1px solid var(--border-strong);
+            border-radius: 11px;
+
+            background: rgba(255, 255, 255, 0.06);
+
+            font-size: 12px;
+            font-weight: 700;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .nav-hire:hover {
+            transform: translateY(-1px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-hire-dot {
+            width: 6px;
+            height: 6px;
+
+            border-radius: 999px;
+            background: #9dffb0;
+
+            box-shadow: 0 0 9px rgba(157, 255, 176, 0.55);
+        }
+
+        /* ---------------------------------
+           HERO
+        --------------------------------- */
+
+        .hero {
+            min-height: 100vh;
+            padding: calc(var(--nav-height) + 60px) 0 70px;
+
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 44px;
+            align-items: center;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            margin-bottom: 22px;
+            padding: 7px 10px;
+
+            border: 1px solid var(--border);
+            border-radius: 999px;
+
+            background: rgba(255, 255, 255, 0.035);
+
+            color: var(--muted-strong);
+
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .eyebrow-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #b6ffca;
+
+            box-shadow:
+                0 0 0 4px rgba(182, 255, 202, 0.06),
+                0 0 14px rgba(182, 255, 202, 0.5);
+        }
+
+        .hero h1 {
+            margin: 0;
+
+            max-width: 700px;
+
+            font-family: "Space Grotesk", sans-serif;
+            font-size: clamp(58px, 7.5vw, 112px);
+            line-height: 0.9;
+            letter-spacing: -0.07em;
+            font-weight: 700;
+        }
+
+        .hero h1 .dim {
+            color: #60646c;
+        }
+
+        .hero-description {
+            max-width: 590px;
+            margin: 28px 0 0;
+
+            color: var(--muted);
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .hero-description strong {
+            color: var(--muted-strong);
+            font-weight: 600;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+
+            margin-top: 30px;
+        }
+
+        .button {
+            min-height: 45px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+
+            padding: 0 16px;
+
+            border: 1px solid var(--border-strong);
+            border-radius: 12px;
+
+            background: rgba(255, 255, 255, 0.055);
+
+            color: var(--text);
+
+            font-size: 13px;
+            font-weight: 700;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.085);
+            border-color: rgba(255, 255, 255, 0.22);
+        }
+
+        .button.primary {
+            background: #f1f2f3;
+            color: #08090b;
+            border-color: #f1f2f3;
+        }
+
+        .button.primary:hover {
+            background: #ffffff;
+        }
+
+        .button svg {
+            width: 15px;
+            height: 15px;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 22px;
+
+            margin-top: 42px;
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .meta-value {
+            color: var(--text);
+
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .meta-label {
+            color: #686d76;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* ---------------------------------
+           3D VIEWER
+        --------------------------------- */
+
+        .viewer-wrap {
+            position: relative;
+        }
+
+        .viewer {
+            position: relative;
+
+            height: min(690px, 68vh);
+            min-height: 500px;
+
+            overflow: hidden;
+
+            border: 1px solid var(--border);
+            border-radius: 28px;
+
+            background:
+                radial-gradient(
+                    circle at 50% 45%,
+                    rgba(255, 255, 255, 0.045),
+                    transparent 36%
+                ),
+                linear-gradient(
+                    140deg,
+                    rgba(255, 255, 255, 0.018),
+                    rgba(255, 255, 255, 0)
+                ),
+                #0a0c0f;
+
+            box-shadow:
+                0 30px 100px rgba(0, 0, 0, 0.45),
+                inset 0 1px rgba(255, 255, 255, 0.04);
+        }
+
+        .viewer::before {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+
+            pointer-events: none;
+            z-index: 2;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    transparent 45%,
+                    rgba(0, 0, 0, 0.34) 100%
+                );
+        }
+
+        .viewer canvas {
+            width: 100% !important;
+            height: 100% !important;
+
+            display: block;
+        }
+
+        .viewer-top {
+            position: absolute;
+            top: 18px;
+            left: 18px;
+            right: 18px;
+
+            z-index: 5;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+
+            pointer-events: none;
+        }
+
+        .viewer-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+
+            padding: 8px 10px;
+
+            border: 1px solid var(--border);
+            border-radius: 10px;
+
+            background: rgba(8, 9, 11, 0.65);
+            backdrop-filter: blur(12px);
+
+            color: #aeb2ba;
+
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .viewer-tag-dot {
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: #b6ffca;
+            box-shadow: 0 0 10px rgba(182, 255, 202, 0.65);
+        }
+
+        .viewer-controls {
+            display: flex;
+            gap: 6px;
+
+            pointer-events: auto;
+        }
+
+        .viewer-control {
+            width: 35px;
+            height: 35px;
+
+            display: grid;
+            place-items: center;
+
+            border: 1px solid var(--border);
+            border-radius: 10px;
+
+            background: rgba(8, 9, 11, 0.68);
+            backdrop-filter: blur(12px);
+
+            color: #d7d9de;
+
+            cursor: pointer;
+
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .viewer-control:hover {
+            transform: translateY(-1px);
+            background: rgba(255, 255, 255, 0.09);
+        }
+
+        .viewer-control svg {
+            width: 15px;
+            height: 15px;
+        }
+
+        .viewer-bottom {
+            position: absolute;
+            left: 18px;
+            right: 18px;
+            bottom: 18px;
+
+            z-index: 5;
+
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 15px;
+
+            pointer-events: none;
+        }
+
+        .viewer-info {
+            max-width: 70%;
+        }
+
+        .viewer-category {
+            margin-bottom: 6px;
+
+            color: #8c919a;
+
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.13em;
+            text-transform: uppercase;
+        }
+
+        .viewer-title {
+            margin: 0;
+
+            font-family: "Space Grotesk", sans-serif;
+            font-size: clamp(21px, 2.2vw, 29px);
+            letter-spacing: -0.04em;
+        }
+
+        .viewer-file {
+            margin-top: 5px;
+
+            color: #70757e;
+
+            font-family: monospace;
+            font-size: 10px;
+        }
+
+        .viewer-hint {
+            padding: 9px 11px;
+
+            border: 1px solid var(--border);
+            border-radius: 10px;
+
+            background: rgba(8, 9, 11, 0.56);
+
+            color: #777c85;
+
+            font-size: 10px;
+            text-align: right;
+        }
+
+        .viewer-loader {
+            position: absolute;
+            inset: 0;
+
+            z-index: 10;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(7, 8, 10, 0.55);
+            backdrop-filter: blur(5px);
+
+            opacity: 0;
+            pointer-events: none;
+
+            transition: opacity 0.25s ease;
+        }
+
+        .viewer-loader.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .loader-inner {
+            width: min(300px, 75%);
+        }
+
+        .loader-text {
+            display: flex;
+            justify-content: space-between;
+
+            margin-bottom: 9px;
+
+            color: #aaaeb5;
+
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .loader-track {
+            width: 100%;
+            height: 3px;
+
+            overflow: hidden;
+
+            border-radius: 99px;
+
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .loader-fill {
+            width: 0%;
+            height: 100%;
+
+            border-radius: inherit;
+
+            background: #ffffff;
+
+            transition: width 0.15s linear;
+        }
+
+        /* ---------------------------------
+           SECTIONS
+        --------------------------------- */
+
+        section {
+            scroll-margin-top: 105px;
+        }
+
+        .section {
+            padding: 110px 0;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 30px;
+
+            margin-bottom: 34px;
+        }
+
+        .section-kicker {
+            margin-bottom: 10px;
+
+            color: #777c85;
+
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.13em;
+            text-transform: uppercase;
+        }
+
+        .section-title {
+            margin: 0;
+
+            font-family: "Space Grotesk", sans-serif;
+            font-size: clamp(34px, 4vw, 60px);
+            line-height: 1;
+            letter-spacing: -0.055em;
+        }
+
+        .section-description {
+            max-width: 440px;
+
+            margin: 0;
+
+            color: var(--muted);
+
+            font-size: 14px;
+            line-height: 1.75;
+        }
+
+        /* ---------------------------------
+           WORK GRID
+        --------------------------------- */
+
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .work-card {
+            position: relative;
+
+            min-height: 370px;
+
+            overflow: hidden;
+
+            border: 1px solid var(--border);
+            border-radius: 21px;
+
+            background: #0d0f12;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.28s ease,
+                border-color 0.28s ease;
+        }
+
+        .work-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.16);
+        }
+
+        .work-card.active {
+            border-color: rgba(255, 255, 255, 0.28);
+        }
+
+        .work-card-preview {
+            position: absolute;
+            inset: 0;
+
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 50% 42%,
+                    var(--preview-glow, rgba(255, 255, 255, 0.11)),
+                    transparent 34%
+                ),
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.045),
+                    rgba(255, 255, 255, 0)
+                );
+        }
+
+        .work-card-preview::before {
+            content: "";
+
+            position: absolute;
+            width: 210px;
+            height: 210px;
+
+            left: 50%;
+            top: 45%;
+
+            transform:
+                translate(-50%, -50%)
+                rotate(24deg);
+
+            border: 1px solid rgba(255, 255, 255, 0.13);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.09),
+                    rgba(255, 255, 255, 0.015)
+                );
+
+            box-shadow:
+                0 20px 80px rgba(0, 0, 0, 0.55),
+                inset 0 1px rgba(255, 255, 255, 0.08);
+
+            clip-path: polygon(
+                50% 0%,
+                88% 18%,
+                100% 60%,
+                74% 100%,
+                25% 93%,
+                0% 56%,
+                13% 17%
+            );
+
+            transition:
+                transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .work-card:nth-child(2) .work-card-preview::before {
+            width: 170px;
+            height: 260px;
+            clip-path: polygon(
+                50% 0%,
+                82% 19%,
+                100% 70%,
+                66% 100%,
+                33% 95%,
+                0% 68%,
+                18% 18%
+            );
+        }
+
+        .work-card:nth-child(3) .work-card-preview::before {
+            width: 260px;
+            height: 180px;
+            clip-path: polygon(
+                8% 25%,
+                53% 0%,
+                94% 23%,
+                100% 72%,
+                65% 100%,
+                11% 82%,
+                0% 50%
+            );
+        }
+
+        .work-card:nth-child(4) .work-card-preview::before {
+            width: 200px;
+            height: 200px;
+            clip-path: polygon(
+                50% 0%,
+                93% 25%,
+                100% 73%,
+                50% 100%,
+                7% 75%,
+                0% 25%
+            );
+        }
+
+        .work-card:hover .work-card-preview::before {
+            transform:
+                translate(-50%, -50%)
+                rotate(34deg)
+                scale(1.06);
+        }
+
+        .work-card-grid {
+            position: absolute;
+            inset: 0;
+
+            opacity: 0.35;
+
+            background:
+                linear-gradient(
+                    rgba(255, 255, 255, 0.04) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255, 255, 255, 0.04) 1px,
+                    transparent 1px
+                );
+
+            background-size: 38px 38px;
+
+            mask-image: radial-gradient(
+                circle at center,
+                black,
+                transparent 74%
+            );
+        }
+
+        .work-card-overlay {
+            position: absolute;
+            inset: 0;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+
+            padding: 24px;
+
+            background:
+                linear-gradient(
+                    to top,
+                    rgba(5, 6, 8, 0.98),
+                    rgba(5, 6, 8, 0.1) 65%
+                );
+        }
+
+        .work-card-top {
+            position: absolute;
+            top: 18px;
+            left: 18px;
+            right: 18px;
+
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .work-number {
+            color: #676c75;
+
+            font-family: monospace;
+            font-size: 10px;
+        }
+
+        .work-type {
+            padding: 6px 8px;
+
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+
+            background: rgba(0, 0, 0, 0.25);
+
+            color: #8f949d;
+
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .work-card h3 {
+            margin: 0;
+
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 24px;
+            letter-spacing: -0.04em;
+        }
+
+        .work-card p {
+            max-width: 440px;
+
+            margin: 7px 0 0;
+
+            color: #81868f;
+
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .work-open {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-top: 19px;
+
+            color: #b5bac2;
+
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .work-open-arrow {
+            width: 28px;
+            height: 28px;
+
+            display: grid;
+            place-items: center;
+
+            border: 1px solid var(--border);
+            border-radius: 8px;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .work-card:hover .work-open-arrow {
+            transform: translate(2px, -2px);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .work-open-arrow svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        /* ---------------------------------
+           ABOUT
+        --------------------------------- */
+
+        .about-layout {
+            display: grid;
+            grid-template-columns: 0.95fr 1.05fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .about-card {
+            padding: 34px;
+
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.032),
+                    rgba(255, 255, 255, 0.008)
+                );
+        }
+
+        .about-card p {
+            margin: 0;
+
+            color: var(--muted);
+
+            font-size: 15px;
+            line-height: 1.9;
+        }
+
+        .about-card p + p {
+            margin-top: 18px;
+        }
+
+        .about-highlight {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .skills {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+
+            margin-top: 28px;
+        }
+
+        .skill {
+            padding: 14px;
+
+            border: 1px solid var(--border);
+            border-radius: 13px;
+
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .skill-name {
+            color: #d6d8dd;
+
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .skill-description {
+            margin-top: 4px;
+
+            color: #696e77;
+
+            font-size: 10px;
+            line-height: 1.5;
+        }
+
+        .about-side {
+            display: grid;
+            gap: 12px;
+        }
+
+        .about-fact {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 20px;
+
+            padding: 19px 0;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        .about-fact:first-child {
+            padding-top: 0;
+        }
+
+        .fact-label {
+            color: #626770;
+
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .fact-value {
+            color: #c4c7ce;
+
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* ---------------------------------
+           HIRE
+        --------------------------------- */
+
+        .hire-section {
+            padding: 70px 0 125px;
+        }
+
+        .hire-card {
+            position: relative;
+
+            overflow: hidden;
+
+            padding: 58px;
+
+            border: 1px solid var(--border-strong);
+            border-radius: 28px;
+
+            background:
+                radial-gradient(
+                    circle at 85% 20%,
+                    rgba(255, 255, 255, 0.07),
+                    transparent 25%
+                ),
+                radial-gradient(
+                    circle at 60% 90%,
+                    rgba(255, 255, 255, 0.025),
+                    transparent 35%
+                ),
+                #0d0f12;
+        }
+
+        .hire-card::before {
+            content: "";
+
+            position: absolute;
+            width: 330px;
+            height: 330px;
+
+            right: -110px;
+            top: -130px;
+
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+
+            box-shadow:
+                0 0 0 45px rgba(255, 255, 255, 0.018),
+                0 0 0 90px rgba(255, 255, 255, 0.012);
+        }
+
+        .hire-content {
+            position: relative;
+            z-index: 2;
+
+            max-width: 700px;
+        }
+
+        .hire-card h2 {
+            margin: 0;
+
+            font-family: "Space Grotesk", sans-serif;
+            font-size: clamp(42px, 6vw, 74px);
+            line-height: 0.96;
+            letter-spacing: -0.06em;
+        }
+
+        .hire-card h2 span {
+            color: #6d727b;
+        }
+
+        .hire-card p {
+            max-width: 610px;
+
+            margin: 20px 0 0;
+
+            color: #898e97;
+
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .hire-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+
+            margin-top: 30px;
+        }
+
+        .hire-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+
+            min-height: 44px;
+            padding: 0 15px;
+
+            border: 1px solid var(--border);
+            border-radius: 11px;
+
+            background: rgba(255, 255, 255, 0.035);
+
+            color: #d5d8dd;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .hire-link:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.07);
+        }
+
+        .hire-link svg {
+            width: 15px;
+            height: 15px;
+        }
+
+        /* ---------------------------------
+           FOOTER
+        --------------------------------- */
+
+        footer {
+            padding: 0 0 30px;
+        }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+
+            padding-top: 22px;
+
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-left {
+            color: #595e67;
+
+            font-size: 11px;
+        }
+
+        .footer-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+
+            color: #555a62;
+
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .footer-right strong {
+            color: #80858e;
+        }
+
+        /* ---------------------------------
+           RESPONSIVE
+        --------------------------------- */
+
+        @media (max-width: 1050px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-copy {
+                max-width: 800px;
+            }
+
+            .viewer {
+                height: 64vh;
+                min-height: 470px;
+            }
+
+            .about-layout {
+                grid-template-columns: 1fr;
+                gap: 45px;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .container {
+                width: min(
+                    calc(100% - 24px),
+                    var(--max-width)
+                );
+            }
+
+            .nav-wrap {
+                padding: 10px 12px;
+            }
+
+            .nav {
+                height: 56px;
+                padding-left: 13px;
+            }
+
+            .brand-name span {
+                display: none;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding-top: 100px;
+            }
+
+            .hero h1 {
+                font-size: clamp(54px, 17vw, 90px);
+            }
+
+            .hero-description {
+                font-size: 14px;
+                line-height: 1.75;
+            }
+
+            .viewer {
+                height: 64vh;
+                min-height: 430px;
+                border-radius: 22px;
+            }
+
+            .viewer-hint {
+                display: none;
+            }
+
+            .viewer-info {
+                max-width: 100%;
+            }
+
+            .section {
+                padding: 80px 0;
+            }
+
+            .section-header {
+                display: block;
+            }
+
+            .section-description {
+                margin-top: 15px;
+            }
+
+            .work-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .work-card {
+                min-height: 330px;
+            }
+
+            .about-card {
+                padding: 24px;
+            }
+
+            .skills {
+                grid-template-columns: 1fr;
+            }
+
+            .about-fact {
+                grid-template-columns: 95px 1fr;
+                gap: 12px;
+            }
+
+            .hire-card {
+                padding: 32px 24px;
+                border-radius: 22px;
+            }
+
+            .hire-section {
+                padding-top: 35px;
+            }
+
+            .footer-inner {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                transition-duration: 0.001ms !important;
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+            }
+        }
+    </style>
+
+    <!--
+        Three.js is loaded through an import map so this can stay as
+        one normal HTML file.
+
+        Models themselves belong in:
+            models/
+
+        Blender files should be exported as GLB/GLTF before using them here.
+    -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.186.0/examples/jsm/"
+        }
+    }
+    </script>
+</head>
+
+<body>
+    <div class="page">
+
+        <!-- ================================
+             NAV
+        ================================= -->
+
+        <div class="nav-wrap">
+            <nav class="nav">
+                <a href="#top" class="brand">
+                    <div class="brand-mark">SX</div>
+
+                    <div class="brand-name">
+                        SKYROX
+                        <span>/ skygamm4</span>
+                    </div>
+                </a>
+
+                <div class="nav-links">
+                    <a href="#work">Work</a>
+                    <a href="#about">About</a>
+                    <a href="#hire">Hire</a>
+                </div>
+
+                <a
+                    class="nav-hire"
+                    href="#hire"
+                >
+                    <span class="nav-hire-dot"></span>
+                    Available
+                </a>
+            </nav>
+        </div>
+
+        <!-- ================================
+             HERO
+        ================================= -->
+
+        <main id="top">
+
+            <section class="hero">
+                <div class="container hero-grid">
+
+                    <div class="hero-copy">
+                        <div class="eyebrow">
+                            <span class="eyebrow-dot"></span>
+                            3D Artist / Modeler
+                        </div>
+
+                        <h1>
+                            MAKING
+                            <span class="dim">3D</span>
+                            <br>
+                            LOOK
+                            <span class="dim">REAL.</span>
+                        </h1>
+
+                        <p class="hero-description">
+                            <strong>Skyrox</strong>, also known as
+                            <strong>skygamm4</strong>.
+                            A 3D modeler focused on building clean,
+                            game-ready assets, props, characters and
+                            environments with an eye for detail.
+                        </p>
+
+                        <div class="hero-actions">
+                            <a
+                                href="#work"
+                                class="button primary"
+                            >
+                                View my work
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path d="M5 12h14"></path>
+                                    <path d="m13 6 6 6-6 6"></path>
+                                </svg>
+                            </a>
+
+                            <a
+                                href="#hire"
+                                class="button"
+                            >
+                                Hire me
+                            </a>
+                        </div>
+
+                        <div class="hero-meta">
+                            <div class="meta-item">
+                                <span class="meta-value">Blender</span>
+                                <span class="meta-label">Primary tool</span>
+                            </div>
+
+                            <div class="meta-item">
+                                <span class="meta-value">3D / Game Art</span>
+                                <span class="meta-label">Focus</span>
+                            </div>
+
+                            <div class="meta-item">
+                                <span class="meta-value">Custom Work</span>
+                                <span class="meta-label">Available for</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3D viewer -->
+
+                    <div class="viewer-wrap">
+                        <div class="viewer" id="viewer">
+
+                            <div class="viewer-top">
+                                <div class="viewer-tag">
+                                    <span class="viewer-tag-dot"></span>
+                                    Interactive model
+                                </div>
+
+                                <div class="viewer-controls">
+                                    <button
+                                        type="button"
+                                        class="viewer-control"
+                                        id="resetCamera"
+                                        aria-label="Reset camera"
+                                        title="Reset camera"
+                                    >
+                                        <svg
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="1.8"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        >
+                                            <path d="M3 12a9 9 0 1 0 3-6.7"></path>
+                                            <path d="M3 4v6h6"></path>
+                                        </svg>
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="viewer-control"
+                                        id="toggleRotate"
+                                        aria-label="Toggle auto rotation"
+                                        title="Toggle auto rotation"
+                                    >
+                                        <svg
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="1.8"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        >
+                                            <path d="M21 12a9 9 0 0 0-15.3-6.3L3 8"></path>
+                                            <path d="M3 3v5h5"></path>
+                                            <path d="M3 12a9 9 0 0 0 15.3 6.3L21 16"></path>
+                                            <path d="M21 21v-5h-5"></path>
+                                        </svg>
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="viewer-control"
+                                        id="fullscreen"
+                                        aria-label="Fullscreen viewer"
+                                        title="Fullscreen viewer"
+                                    >
+                                        <svg
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="1.8"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        >
+                                            <path d="M8 3H3v5"></path>
+                                            <path d="M16 3h5v5"></path>
+                                            <path d="M21 16v5h-5"></path>
+                                            <path d="M3 16v5h5"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div
+                                class="viewer-loader"
+                                id="viewerLoader"
+                            >
+                                <div class="loader-inner">
+                                    <div class="loader-text">
+                                        <span id="loaderText">
+                                            Loading model
+                                        </span>
+
+                                        <span id="loaderPercent">
+                                            0%
+                                        </span>
+                                    </div>
+
+                                    <div class="loader-track">
+                                        <div
+                                            class="loader-fill"
+                                            id="loaderFill"
+                                        ></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="viewer-bottom">
+                                <div class="viewer-info">
+                                    <div
+                                        class="viewer-category"
+                                        id="viewerCategory"
+                                    >
+                                        Featured
+                                    </div>
+
+                                    <h2
+                                        class="viewer-title"
+                                        id="viewerTitle"
+                                    >
+                                        Featured Model
+                                    </h2>
+
+                                    <div
+                                        class="viewer-file"
+                                        id="viewerFile"
+                                    >
+                                        models/featured.glb
+                                    </div>
+                                </div>
+
+                                <div class="viewer-hint">
+                                    Drag to rotate<br>
+                                    Scroll to zoom
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- ================================
+                 WORK
+            ================================= -->
+
+            <section
+                class="section"
+                id="work"
+            >
+                <div class="container">
+
+                    <div class="section-header">
+                        <div>
+                            <div class="section-kicker">
+                                Selected work
+                            </div>
+
+                            <h2 class="section-title">
+                                Things I've made.
+                            </h2>
+                        </div>
+
+                        <p class="section-description">
+                            A few examples of the type of work Skyrox
+                            creates. Click any project to load it into
+                            the interactive 3D viewer above.
+                        </p>
+                    </div>
+
+                    <div class="work-grid">
+
+                        <!-- CARD 01 -->
+
+                        <article
+                            class="work-card active"
+                            data-model="0"
+                            style="--preview-glow: rgba(255,255,255,0.12);"
+                        >
+                            <div class="work-card-preview">
+                                <div class="work-card-grid"></div>
+                            </div>
+
+                            <div class="work-card-top">
+                                <span class="work-number">
+                                    01
+                                </span>
+
+                                <span class="work-type">
+                                    Featured
+                                </span>
+                            </div>
+
+                            <div class="work-card-overlay">
+                                <h3>Featured Character</h3>
+
+                                <p>
+                                    A detailed character asset with
+                                    production-ready proportions and
+                                    clean geometry.
+                                </p>
+
+                                <div class="work-open">
+                                    <span>
+                                        Open in viewer
+                                    </span>
+
+                                    <span class="work-open-arrow">
+                                        <svg
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        >
+                                            <path d="M5 19 19 5"></path>
+                                            <path d="M7 5h12v12"></path>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- CARD 02 -->
+
+                        <article
+                            class="work-card"
+                            data-model="1"
+                            style="--preview-glow: rgba(170,180,255,0.1);"
+                        >
+                            <div class="work-card-preview">
+                                <div class="work-card-grid"></div>
+                            </div>
+
+                            <div class="work-card-top">
+                                <span class="work-number">
+                                    02
+                                </span>
+
+                                <span class="work-type">
+                                    Prop
+                                </span>
+                            </div>
+
+                            <div class="work-card-overlay">
+                                <h3>Weapon Concept</h3>
+
+                                <p>
+                                    A hard-surface asset built around
+                                    readable shapes, material separation
+                                    and strong silhouettes.
+                                </p>
+
+                                <div class="work-open">
+                                    <span>
+                                        Open in viewer
+                                    </span>
+
+                                    <span class="work-open-arrow">
+                                        <svg
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        >
+                                            <path d="M5 19 19 5"></path>
+                                            <path d="M7 5h12v12"></path>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- CARD 03 -->
+
+                        <article
+                            class="work-card"
+                            data-model="2"
+                            style="--preview-glow: rgba(255,212,162,0.09);"
+                        >
+                            <div class="work-card-preview">
+                                <div class="work-card-grid"></div>
+                            </div>
+
+                            <div class="work-card-top">
+                                <span class="work-number">
+                                    03
+                                </span>
+
+                                <span class="work-type">
+                                    Environment
+                                </span>
+                            </div>
+
+                            <div class="work-card-overlay">
+                                <h3>Environment Piece</h3>
+
+                                <p>
+                                    Modular environmental work designed
+                                    with composition, scale and gameplay
+                                    readability in mind.
+                                </p>
+
+                                <div class="work-open">
+                                    <span>
+                                        Open in viewer
+                                    </span>
+
+                                    <span class="work-open-arrow">
+                                        <svg
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        >
+                                            <path d="M5 19 19 5"></path>
+                                            <path d="M7 5h12v12"></path>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- CARD 04 -->
+
+                        <article
+                            class="work-card"
+                            data-model="3"
+                            style="--preview-glow: rgba(178,255,216,0.08);"
+                        >
+                            <div class="work-card-preview">
+                                <div class="work-card-grid"></div>
+                            </div>
+
+                            <div class="work-card-top">
+                                <span class="work-number">
+                                    04
+                                </span>
+
+                                <span class="work-type">
+                                    Hard Surface
+                                </span>
+                            </div>
+
+                            <div class="work-card-overlay">
+                                <h3>Hard-Surface Prop</h3>
+
+                                <p>
+                                    Clean hard-surface modeling with
+                                    attention to bevels, material breakup
+                                    and silhouette.
+                                </p>
+
+                                <div class="work-open">
+                                    <span>
+                                        Open in viewer
+                                    </span>
+
+                                    <span class="work-open-arrow">
+                                        <svg
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        >
+                                            <path d="M5 19 19 5"></path>
+                                            <path d="M7 5h12v12"></path>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                        </article>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================================
+                 ABOUT
+            ================================= -->
+
+            <section
+                class="section"
+                id="about"
+            >
+                <div class="container">
+
+                    <div class="section-header">
+                        <div>
+                            <div class="section-kicker">
+                                About
+                            </div>
+
+                            <h2 class="section-title">
+                                Meet Skyrox.
+                            </h2>
+                        </div>
+                    </div>
+
+                    <div class="about-layout">
+
+                        <div class="about-card">
+                            <p>
+                                I'm <span class="about-highlight">Skyrox</span>,
+                                also known online as
+                                <span class="about-highlight">skygamm4</span>.
+                                I make 3D models with a focus on creating
+                                assets that actually look good when they're
+                                dropped into a real project.
+                            </p>
+
+                            <p>
+                                Most of my work revolves around modeling,
+                                shaping silhouettes, detailing assets and
+                                building pieces that feel like they belong
+                                in a finished game or scene.
+                            </p>
+
+                            <p>
+                                Blender is my main tool, but the goal is
+                                always the final result rather than the
+                                software itself.
+                            </p>
+
+                            <div class="skills">
+                                <div class="skill">
+                                    <div class="skill-name">
+                                        3D Modeling
+                                    </div>
+
+                                    <div class="skill-description">
+                                        Characters, props and custom assets.
+                                    </div>
+                                </div>
+
+                                <div class="skill">
+                                    <div class="skill-name">
+                                        Hard Surface
+                                    </div>
+
+                                    <div class="skill-description">
+                                        Mechanical and detailed props.
+                                    </div>
+                                </div>
+
+                                <div class="skill">
+                                    <div class="skill-name">
+                                        Game Assets
+                                    </div>
+
+                                    <div class="skill-description">
+                                        Models designed for real projects.
+                                    </div>
+                                </div>
+
+                                <div class="skill">
+                                    <div class="skill-name">
+                                        Custom Work
+                                    </div>
+
+                                    <div class="skill-description">
+                                        Made around the client's idea.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="about-side">
+
+                            <div class="about-fact">
+                                <div class="fact-label">
+                                    Name
+                                </div>
+
+                                <div class="fact-value">
+                                    Skyrox
+                                    <span style="color:#666b73;">
+                                        / skygamm4
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="about-fact">
+                                <div class="fact-label">
+                                    Main Tool
+                                </div>
+
+                                <div class="fact-value">
+                                    Blender
+                                </div>
+                            </div>
+
+                            <div class="about-fact">
+                                <div class="fact-label">
+                                    Specialties
+                                </div>
+
+                                <div class="fact-value">
+                                    3D modeling, props, characters,
+                                    hard-surface assets and environments.
+                                </div>
+                            </div>
+
+                            <div class="about-fact">
+                                <div class="fact-label">
+                                    Workflow
+                                </div>
+
+                                <div class="fact-value">
+                                    Concept → Modeling → Detail →
+                                    Materials → Final export
+                                </div>
+                            </div>
+
+                            <div class="about-fact">
+                                <div class="fact-label">
+                                    Status
+                                </div>
+
+                                <div class="fact-value">
+                                    Available for commissions and custom
+                                    modeling work.
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================================
+                 HIRE
+            ================================= -->
+
+            <section
+                class="hire-section"
+                id="hire"
+            >
+                <div class="container">
+
+                    <div class="hire-card">
+                        <div class="hire-content">
+
+                            <div class="section-kicker">
+                                Work with me
+                            </div>
+
+                            <h2>
+                                Have an idea?
+                                <br>
+                                <span>Let's build it.</span>
+                            </h2>
+
+                            <p>
+                                Need a custom model, game asset, prop,
+                                character or something completely
+                                different? Get in touch through one of
+                                the platforms below and let's talk about
+                                what you're looking for.
+                            </p>
+
+                            <div class="hire-links">
+
+                                <!--
+                                    Replace these links with Skyrox's
+                                    actual profiles.
+                                -->
+
+                                <a
+                                    class="hire-link"
+                                    href="https://www.fiverr.com/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path d="M4 8h6"></path>
+                                        <path d="M6 8v10"></path>
+                                        <path d="M10 8h4"></path>
+                                        <path d="M14 8v10"></path>
+                                        <path d="M10 18h8"></path>
+                                        <circle
+                                            cx="15"
+                                            cy="5"
+                                            r="1"
+                                        ></circle>
+                                    </svg>
+
+                                    Fiverr
+                                </a>
+
+                                <a
+                                    class="hire-link"
+                                    href="https://discord.com/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path d="M8 18c-3 0-4-3-4-7s1-7 4-7"></path>
+                                        <path d="M16 18c3 0 4-3 4-7s-1-7-4-7"></path>
+                                        <path d="M8 18c2 1 6 1 8 0"></path>
+                                        <path d="M9 9h.01"></path>
+                                        <path d="M15 9h.01"></path>
+                                        <path d="M8 5c3-1 5-1 8 0"></path>
+                                    </svg>
+
+                                    Discord
+                                </a>
+
+                                <a
+                                    class="hire-link"
+                                    href="mailto:hello@example.com"
+                                >
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <rect
+                                            x="3"
+                                            y="5"
+                                            width="18"
+                                            height="14"
+                                            rx="2"
+                                        ></rect>
+
+                                        <path d="m3 7 9 6 9-6"></path>
+                                    </svg>
+
+                                    Email
+                                </a>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </main>
+
+        <!-- ================================
+             FOOTER
+        ================================= -->
+
+        <footer>
+            <div class="container">
+                <div class="footer-inner">
+
+                    <div class="footer-left">
+                        © 2026 Skyrox / skygamm4
+                    </div>
+
+                    <div class="footer-right">
+                        Built for
+                        <strong>3D</strong>
+                    </div>
+
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <script type="module">
+        import * as THREE from "three";
+        import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+        import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+
+        /*
+         * ============================================================
+         * MODEL LIST
+         * ============================================================
+         *
+         * Put the actual exported Blender files in:
+         *
+         *     models/
+         *
+         * Example:
+         *
+         *     models/featured.glb
+         *     models/weapon.glb
+         *     models/environment.glb
+         *     models/prop.glb
+         *
+         * Then change the paths below.
+         */
+
+        const MODELS = [
+            {
+                title: "Featured Character",
+                category: "Featured",
+                file: "models/featured.glb",
+                description: "Featured character model."
+            },
+            {
+                title: "Weapon Concept",
+                category: "Prop",
+                file: "models/weapon.glb",
+                description: "Hard-surface weapon asset."
+            },
+            {
+                title: "Environment Piece",
+                category: "Environment",
+                file: "models/environment.glb",
+                description: "Environment asset."
+            },
+            {
+                title: "Hard-Surface Prop",
+                category: "Hard Surface",
+                file: "models/prop.glb",
+                description: "Hard-surface prop."
+            }
+        ];
+
+        /*
+         * ============================================================
+         * DOM
+         * ============================================================
+         */
+
+        const viewer = document.getElementById("viewer");
+
+        const viewerTitle = document.getElementById("viewerTitle");
+        const viewerCategory = document.getElementById("viewerCategory");
+        const viewerFile = document.getElementById("viewerFile");
+
+        const viewerLoader = document.getElementById("viewerLoader");
+        const loaderFill = document.getElementById("loaderFill");
+        const loaderText = document.getElementById("loaderText");
+        const loaderPercent = document.getElementById("loaderPercent");
+
+        const resetCameraButton =
+            document.getElementById("resetCamera");
+
+        const toggleRotateButton =
+            document.getElementById("toggleRotate");
+
+        const fullscreenButton =
+            document.getElementById("fullscreen");
+
+        const workCards =
+            document.querySelectorAll(".work-card");
+
+        /*
+         * ============================================================
+         * SCENE
+         * ============================================================
+         */
+
+        const scene = new THREE.Scene();
+
+        scene.background = new THREE.Color(0x0a0c0f);
+
+        /*
+         * Camera
+         */
+
+        const camera = new THREE.PerspectiveCamera(
+            42,
+            1,
+            0.1,
+            100
+        );
+
+        camera.position.set(
+            4.4,
+            2.8,
+            5.6
+        );
+
+        /*
+         * Renderer
+         */
+
+        const renderer = new THREE.WebGLRenderer({
+            antialias: true,
+            alpha: true,
+            powerPreference: "high-performance"
+        });
+
+        renderer.setPixelRatio(
+            Math.min(window.devicePixelRatio, 2)
+        );
+
+        renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+        renderer.toneMapping =
+            THREE.ACESFilmicToneMapping;
+
+        renderer.toneMappingExposure = 1.15;
+
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+        viewer.appendChild(renderer.domElement);
+
+        /*
+         * Controls
+         */
+
+        const controls = new OrbitControls(
+            camera,
+            renderer.domElement
+        );
+
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.055;
+
+        controls.enablePan = false;
+
+        controls.minDistance = 2;
+        controls.maxDistance = 10;
+
+        controls.minPolarAngle = 0.25;
+        controls.maxPolarAngle = Math.PI * 0.83;
+
+        controls.target.set(
+            0,
+            0.8,
+            0
+        );
+
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 0.8;
+
+        /*
+         * ============================================================
+         * LIGHTING
+         * ============================================================
+         */
+
+        const hemiLight = new THREE.HemisphereLight(
+            0xffffff,
+            0x151820,
+            2.2
+        );
+
+        scene.add(hemiLight);
+
+        const keyLight = new THREE.DirectionalLight(
+            0xffffff,
+            3.3
+        );
+
+        keyLight.position.set(
+            4,
+            7,
+            5
+        );
+
+        keyLight.castShadow = true;
+
+        keyLight.shadow.mapSize.width = 1024;
+        keyLight.shadow.mapSize.height = 1024;
+
+        keyLight.shadow.camera.near = 0.5;
+        keyLight.shadow.camera.far = 20;
+
+        scene.add(keyLight);
+
+        const fillLight = new THREE.DirectionalLight(
+            0xbcc7ff,
+            1.5
+        );
+
+        fillLight.position.set(
+            -5,
+            4,
+            -2
+        );
+
+        scene.add(fillLight);
+
+        const rimLight = new THREE.PointLight(
+            0xffffff,
+            2.1,
+            10
+        );
+
+        rimLight.position.set(
+            -2,
+            2.5,
+            -4
+        );
+
+        scene.add(rimLight);
+
+        /*
+         * ============================================================
+         * FLOOR
+         * ============================================================
+         */
+
+        const floor = new THREE.Mesh(
+            new THREE.CircleGeometry(4.8, 96),
+            new THREE.MeshStandardMaterial({
+                color: 0x0b0d10,
+                roughness: 0.92,
+                metalness: 0.06
+            })
+        );
+
+        floor.rotation.x = -Math.PI / 2;
+
+        floor.position.y = -0.02;
+
+        floor.receiveShadow = true;
+
+        scene.add(floor);
+
+        /*
+         * Subtle circular ring underneath the model.
+         */
+
+        const ringMaterial =
+            new THREE.MeshBasicMaterial({
+                color: 0x4c5159,
+                transparent: true,
+                opacity: 0.12
+            });
+
+        const ring = new THREE.Mesh(
+            new THREE.RingGeometry(
+                1.9,
+                1.91,
+                96
+            ),
+            ringMaterial
+        );
+
+        ring.rotation.x = -Math.PI / 2;
+        ring.position.y = 0.005;
+
+        scene.add(ring);
+
+        /*
+         * ============================================================
+         * MODEL STATE
+         * ============================================================
+         */
+
+        const loader = new GLTFLoader();
+
+        let currentModel = null;
+        let animationMixer = null;
+
+        let activeModelIndex = 0;
+
+        /*
+         * ============================================================
+         * FALLBACK MODEL
+         * ============================================================
+         *
+         * If somebody opens the page before the actual GLB files are
+         * added, the viewer still has something to show.
+         */
+
+        function createFallbackModel() {
+            const group = new THREE.Group();
+
+            const mainMaterial =
+                new THREE.MeshStandardMaterial({
+                    color: 0xd9dce1,
+                    roughness: 0.34,
+                    metalness: 0.72
+                });
+
+            const darkMaterial =
+                new THREE.MeshStandardMaterial({
+                    color: 0x252930,
+                    roughness: 0.55,
+                    metalness: 0.35
+                });
+
+            const accentMaterial =
+                new THREE.MeshStandardMaterial({
+                    color: 0xeeeeee,
+                    roughness: 0.25,
+                    metalness: 0.8
+                });
+
+            /*
+             * Main body
+             */
+
+            const body = new THREE.Mesh(
+                new THREE.BoxGeometry(
+                    1.7,
+                    2.25,
+                    1.1
+                ),
+                mainMaterial
+            );
+
+            body.position.y = 1.35;
+            body.castShadow = true;
+
+            group.add(body);
+
+            /*
+             * Head
+             */
+
+            const head = new THREE.Mesh(
+                new THREE.IcosahedronGeometry(
+                    0.72,
+                    2
+                ),
+                accentMaterial
+            );
+
+            head.position.y = 2.95;
+            head.castShadow = true;
+
+            group.add(head);
+
+            /*
+             * Shoulder detail
+             */
+
+            for (const side of [-1, 1]) {
+                const shoulder = new THREE.Mesh(
+                    new THREE.BoxGeometry(
+                        0.45,
+                        0.5,
+                        1.28
+                    ),
+                    darkMaterial
+                );
+
+                shoulder.position.set(
+                    side * 1.05,
+                    1.82,
+                    0
+                );
+
+                shoulder.castShadow = true;
+
+                group.add(shoulder);
+            }
+
+            /*
+             * Core ring
+             */
+
+            const core = new THREE.Mesh(
+                new THREE.TorusGeometry(
+                    0.28,
+                    0.075,
+                    12,
+                    36
+                ),
+                accentMaterial
+            );
+
+            core.rotation.x =
+                Math.PI / 2;
+
+            core.position.set(
+                0,
+                1.45,
+                0.6
+            );
+
+            group.add(core);
+
+            /*
+             * Legs
+             */
+
+            for (const side of [-1, 1]) {
+                const leg = new THREE.Mesh(
+                    new THREE.BoxGeometry(
+                        0.53,
+                        1.45,
+                        0.63
+                    ),
+                    darkMaterial
+                );
+
+                leg.position.set(
+                    side * 0.47,
+                    -0.45,
+                    0
+                );
+
+                leg.castShadow = true;
+
+                group.add(leg);
+            }
+
+            return group;
+        }
+
+        /*
+         * ============================================================
+         * MODEL HELPERS
+         * ============================================================
+         */
+
+        function disposeMaterial(material) {
+            if (!material) {
+                return;
+            }
+
+            const properties = [
+                "map",
+                "normalMap",
+                "roughnessMap",
+                "metalnessMap",
+                "aoMap",
+                "emissiveMap",
+                "alphaMap",
+                "bumpMap",
+                "displacementMap",
+                "clearcoatMap",
+                "clearcoatNormalMap",
+                "clearcoatRoughnessMap"
+            ];
+
+            for (const property of properties) {
+                const texture = material[property];
+
+                if (texture) {
+                    texture.dispose();
+                }
+            }
+
+            material.dispose();
+        }
+
+        function disposeObject(object) {
+            object.traverse(child => {
+                if (child.geometry) {
+                    child.geometry.dispose();
+                }
+
+                if (child.material) {
+                    if (Array.isArray(child.material)) {
+                        child.material.forEach(disposeMaterial);
+                    } else {
+                        disposeMaterial(child.material);
+                    }
+                }
+            });
+        }
+
+        function clearCurrentModel() {
+            if (currentModel) {
+                scene.remove(currentModel);
+                disposeObject(currentModel);
+                currentModel = null;
+            }
+
+            if (animationMixer) {
+                animationMixer.stopAllAction();
+                animationMixer = null;
+            }
+        }
+
+        function prepareModel(model) {
+            const box = new THREE.Box3().setFromObject(model);
+
+            const size = new THREE.Vector3();
+            const center = new THREE.Vector3();
+
+            box.getSize(size);
+            box.getCenter(center);
+
+            const maxSize = Math.max(
+                size.x,
+                size.y,
+                size.z
+            );
+
+            if (maxSize <= 0) {
+                return;
+            }
+
+            const desiredSize = 3.3;
+
+            const scale =
+                desiredSize / maxSize;
+
+            model.scale.setScalar(scale);
+
+            /*
+             * Recalculate after scaling.
+             */
+
+            const scaledBox =
+                new THREE.Box3().setFromObject(model);
+
+            const scaledCenter =
+                new THREE.Vector3();
+
+            scaledBox.getCenter(scaledCenter);
+
+            model.position.x -= scaledCenter.x;
+            model.position.z -= scaledCenter.z;
+
+            model.position.y -= scaledBox.min.y;
+
+            model.position.y += 0.05;
+
+            model.traverse(child => {
+                if (!child.isMesh) {
+                    return;
+                }
+
+                child.castShadow = true;
+                child.receiveShadow = true;
+
+                /*
+                 * A lot of Blender exports look better with this.
+                 */
+
+                if (child.material) {
+                    const materials =
+                        Array.isArray(child.material)
+                            ? child.material
+                            : [child.material];
+
+                    materials.forEach(material => {
+                        material.side =
+                            THREE.FrontSide;
+
+                        if (
+                            material.map
+                        ) {
+                            material.map.colorSpace =
+                                THREE.SRGBColorSpace;
+                        }
+
+                        if (
+                            material.emissiveMap
+                        ) {
+                            material.emissiveMap.colorSpace =
+                                THREE.SRGBColorSpace;
+                        }
+                    });
+                }
+            });
+        }
+
+        function updateViewerText(modelIndex) {
+            const model =
+                MODELS[modelIndex];
+
+            viewerTitle.textContent =
+                model.title;
+
+            viewerCategory.textContent =
+                model.category;
+
+            viewerFile.textContent =
+                model.file;
+        }
+
+        function setLoading(
+            active,
+            message = "Loading model",
+            percent = 0
+        ) {
+            viewerLoader.classList.toggle(
+                "active",
+                active
+            );
+
+            loaderText.textContent =
+                message;
+
+            const safePercent =
+                Math.max(
+                    0,
+                    Math.min(100, percent)
+                );
+
+            loaderFill.style.width =
+                `${safePercent}%`;
+
+            loaderPercent.textContent =
+                `${Math.round(safePercent)}%`;
+        }
+
+        function resetCamera() {
+            camera.position.set(
+                4.4,
+                2.8,
+                5.6
+            );
+
+            controls.target.set(
+                0,
+                0.8,
+                0
+            );
+
+            controls.update();
+        }
+
+        /*
+         * ============================================================
+         * LOAD MODEL
+         * ============================================================
+         */
+
+        function loadModel(index) {
+            const modelInfo =
+                MODELS[index];
+
+            if (!modelInfo) {
+                return;
+            }
+
+            activeModelIndex = index;
+
+            updateViewerText(index);
+
+            workCards.forEach(card => {
+                card.classList.toggle(
+                    "active",
+                    Number(card.dataset.model) === index
+                );
+            });
+
+            clearCurrentModel();
+
+            setLoading(
+                true,
+                "Loading model",
+                0
+            );
+
+            loader.load(
+                modelInfo.file,
+
+                gltf => {
+                    currentModel =
+                        gltf.scene;
+
+                    prepareModel(
+                        currentModel
+                    );
+
+                    scene.add(
+                        currentModel
+                    );
+
+                    if (
+                        gltf.animations &&
+                        gltf.animations.length
+                    ) {
+                        animationMixer =
+                            new THREE.AnimationMixer(
+                                currentModel
+                            );
+
+                        const firstClip =
+                            gltf.animations[0];
+
+                        const action =
+                            animationMixer
+                                .clipAction(
+                                    firstClip
+                                );
+
+                        action.play();
+                    }
+
+                    resetCamera();
+
+                    setLoading(
+                        false
+                    );
+                },
+
+                progress => {
+                    if (
+                        progress.total &&
+                        progress.total > 0
+                    ) {
+                        const percent =
+                            (progress.loaded /
+                                progress.total) *
+                            100;
+
+                        setLoading(
+                            true,
+                            "Loading model",
+                            percent
+                        );
+                    } else {
+                        setLoading(
+                            true,
+                            "Loading model",
+                            20
+                        );
+                    }
+                },
+
+                error => {
+                    console.warn(
+                        "Could not load model:",
+                        modelInfo.file,
+                        error
+                    );
+
+                    /*
+                     * Keep the website usable if the file isn't
+                     * there yet.
+                     */
+
+                    currentModel =
+                        createFallbackModel();
+
+                    prepareModel(
+                        currentModel
+                    );
+
+                    scene.add(
+                        currentModel
+                    );
+
+                    setLoading(
+                        false
+                    );
+
+                    viewerFile.textContent =
+                        `${modelInfo.file} — add this file to models/`;
+                }
+            );
+        }
+
+        /*
+         * ============================================================
+         * WORK CARD INTERACTION
+         * ============================================================
+         */
+
+        workCards.forEach(card => {
+            card.addEventListener(
+                "click",
+                () => {
+                    const index =
+                        Number(
+                            card.dataset.model
+                        );
+
+                    loadModel(index);
+
+                    document
+                        .getElementById("viewer")
+                        .scrollIntoView({
+                            behavior: "smooth",
+                            block: "center"
+                        });
+                }
+            );
+        });
+
+        /*
+         * ============================================================
+         * VIEWER BUTTONS
+         * ============================================================
+         */
+
+        resetCameraButton.addEventListener(
+            "click",
+            () => {
+                resetCamera();
+            }
+        );
+
+        toggleRotateButton.addEventListener(
+            "click",
+            () => {
+                controls.autoRotate =
+                    !controls.autoRotate;
+
+                toggleRotateButton.style.background =
+                    controls.autoRotate
+                        ? "rgba(255,255,255,0.10)"
+                        : "";
+            }
+        );
+
+        fullscreenButton.addEventListener(
+            "click",
+            async () => {
+                try {
+                    if (
+                        document.fullscreenElement
+                    ) {
+                        await document.exitFullscreen();
+                    } else {
+                        await viewer.requestFullscreen();
+                    }
+                } catch (error) {
+                    console.warn(
+                        "Fullscreen unavailable:",
+                        error
+                    );
+                }
+            }
+        );
+
+        /*
+         * ============================================================
+         * RESIZE
+         * ============================================================
+         */
+
+        function resizeViewer() {
+            const width =
+                viewer.clientWidth;
+
+            const height =
+                viewer.clientHeight;
+
+            if (
+                width <= 0 ||
+                height <= 0
+            ) {
+                return;
+            }
+
+            camera.aspect =
+                width / height;
+
+            camera.updateProjectionMatrix();
+
+            renderer.setSize(
+                width,
+                height,
+                false
+            );
+        }
+
+        const resizeObserver =
+            new ResizeObserver(
+                resizeViewer
+            );
+
+        resizeObserver.observe(viewer);
+
+        window.addEventListener(
+            "resize",
+            resizeViewer
+        );
+
+        /*
+         * ============================================================
+         * ANIMATION
+         * ============================================================
+         */
+
+        const clock =
+            new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(
+                animate
+            );
+
+            const delta =
+                clock.getDelta();
+
+            if (animationMixer) {
+                animationMixer.update(
+                    delta
+                );
+            }
+
+            controls.update();
+
+            renderer.render(
+                scene,
+                camera
+            );
+        }
+
+        /*
+         * ============================================================
+         * START
+         * ============================================================
+         */
+
+        resizeViewer();
+
+        loadModel(0);
+
+        animate();
+    </script>
+</body>
+</html>
